@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<TeamService>();
 builder.Services.AddSingleton<PlayerService>();
 builder.Services.AddSingleton<GameService>();
+builder.Services.AddSingleton<GameEventService>();
 
 var app = builder.Build();
 

@@ -14,7 +14,7 @@ public class TeamsController : ControllerBase
     [HttpGet]
     public ActionResult<List<Team>> GetTeams()
     {
-        return _teamService.GetAll();
+        return Ok(_teamService.GetAll());
     }
 
     [HttpGet("{id}")]

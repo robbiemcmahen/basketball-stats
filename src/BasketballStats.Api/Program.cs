@@ -7,6 +7,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<TeamService>();
+builder.Services.AddSingleton<PlayerService>();
 
 var app = builder.Build();
 

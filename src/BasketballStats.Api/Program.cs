@@ -8,6 +8,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<TeamService>();
 builder.Services.AddSingleton<PlayerService>();
+builder.Services.AddSingleton<GameService>();
 
 var app = builder.Build();
 

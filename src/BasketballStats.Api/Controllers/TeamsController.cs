@@ -4,36 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 [Route("/api/[controller]")]
 public class TeamsController : ControllerBase
 {
-    private static readonly List<Team> Teams = new()
+    private readonly TeamService _teamService;
+
+    public TeamsController(TeamService teamService)
     {
-        new Team { Id = 1, Name = "Chuds" }
-    };
+        _teamService = teamService;
+    }
 
     [HttpGet]
     public ActionResult<List<Team>> GetTeams()
     {
-        return Ok(Teams);
+        return _teamService.GetAll();
     }
 
     [HttpGet("{id}")]
     public ActionResult<Team> GetTeam(int id)
     {
-        var team = Teams.FirstOrDefault(t => t.Id == id);
-
-        if (team == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(team);
+        return _teamService.GetById(id);
     }
 
     [HttpPost]
     public ActionResult<Team> CreateTeam(Team team)
     {
-        team.Id = Teams.Count + 1;
-        Teams.Add(team);
-
-        return CreatedAtAction(nameof(GetTeam), new { id = team.Id }, team);
+        return _teamService.Create(team);
     }
 }

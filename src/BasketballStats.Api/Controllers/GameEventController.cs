@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("/api/controller")]
+[Route("/api/[controller]")]
 public class GameEventController : ControllerBase
 {
     private readonly GameEventService _gameEventService;

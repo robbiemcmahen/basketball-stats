@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 public class GamesControler : ControllerBase
 {
     private readonly GameService _gameService;
+    private readonly BoxScoreService _boxScoreService;
 
-    public GamesControler(GameService gameService)
+    public GamesControler(GameService gameService, BoxScoreService boxScoreService)
     {
         _gameService = gameService;
+        _boxScoreService = boxScoreService;
     }
 
     [HttpGet]
@@ -53,5 +55,20 @@ public class GamesControler : ControllerBase
         }
 
         return Ok(updatedGame);
+    }
+
+    [HttpGet("{id}/boxscore")]
+    public ActionResult<GameBoxScore> GetBoxScore(int id)
+    {
+        var game = _gameService.GetById(id);
+
+        if (game == null)
+        {
+            return NotFound();
+        }
+
+        var boxScore = _boxScoreService.GetBoxScore(id);
+
+        return Ok(boxScore);
     }
 }

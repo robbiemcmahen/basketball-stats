@@ -16,6 +16,7 @@ builder.Services.AddSingleton<TeamService>();
 builder.Services.AddSingleton<PlayerService>();
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<GameEventService>();
+builder.Services.AddSingleton<BoxScoreService>();
 
 var app = builder.Build();
 

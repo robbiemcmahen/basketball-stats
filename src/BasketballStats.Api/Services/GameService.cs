@@ -1,38 +1,34 @@
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 
 public class GameService
 {
-    private readonly List<Game> _games = new()
+    private readonly AppDbContext _context;
+    
+    public GameService(AppDbContext context)
     {
-        new Game
-        {
-            Id = 1,
-            HomeTeamId = 1,
-            AwayTeamId = 2,
-            Status = GameStatus.NotStarted
-        }
-    };
-
-    public List<Game> GetAll()
-    {
-        return _games;
+        _context = context;
     }
 
-    public Game? GetById(int id)
+    public async Task<List<Game>> GetAll()
     {
-        return _games.FirstOrDefault(g => g.Id == id);
+        return await _context.Games.ToListAsync();
     }
 
-    public Game Create(Game game)
+    public async Task<Game?> GetById(int id)
     {
-        game.Id = _games.Count + 1;
-        _games.Add(game);
+        return await _context.Games.FindAsync(id);
+    }
+
+    public async Task<Game> Create(Game game)
+    {
+        _context.Games.Add(game);
+        await _context.SaveChangesAsync();
         return game;
     }
 
-    public Game? UpdateStatus(int id, GameStatus status)
+    public async Task<Game?> UpdateStatus(int id, GameStatus status)
     {
-        var game = GetById(id);
+        var game = await GetById(id);
 
         if (game == null)
         {
@@ -40,6 +36,7 @@ public class GameService
         }
 
         game.Status = status;
+        await _context.SaveChangesAsync();
         return game;
     }
 }

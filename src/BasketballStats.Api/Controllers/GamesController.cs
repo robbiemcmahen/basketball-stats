@@ -14,15 +14,15 @@ public class GamesController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Game>> GetGames()
+    public async Task<ActionResult<List<Game>>> GetGames()
     {
-        return Ok(_gameService.GetAll());
+        return Ok(await _gameService.GetAll());
     }
     
     [HttpGet("{id}")]
-    public ActionResult<Game> GetGame(int id)
+    public async Task<ActionResult<Game>> GetGame(int id)
     {
-        var game = _gameService.GetById(id);
+        var game =  await _gameService.GetById(id);
 
         if (game == null)
         {
@@ -33,9 +33,9 @@ public class GamesController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Game> CreateGame(Game game)
+    public async Task<ActionResult<Game>> CreateGame(Game game)
     {
-        var createdGame = _gameService.Create(game);
+        var createdGame =  await _gameService.Create(game);
 
         return CreatedAtAction(
             nameof(GetGame),
@@ -45,9 +45,9 @@ public class GamesController : ControllerBase
     }
 
     [HttpPatch("{id}/status")]
-    public ActionResult<Game> UpdateGameStatus(int id, [FromBody] GameStatus status)
+    public async Task<ActionResult<Game>> UpdateGameStatus(int id, [FromBody] GameStatus status)
     {
-        var updatedGame = _gameService.UpdateStatus(id, status);
+        var updatedGame = await _gameService.UpdateStatus(id, status);
 
         if (updatedGame == null)
         {
@@ -58,9 +58,9 @@ public class GamesController : ControllerBase
     }
 
     [HttpGet("{id}/boxscore")]
-    public ActionResult<GameBoxScore> GetBoxScore(int id)
+    public async Task<ActionResult<GameBoxScore>> GetBoxScore(int id)
     {
-        var game = _gameService.GetById(id);
+        var game = await _gameService.GetById(id);
 
         if (game == null)
         {

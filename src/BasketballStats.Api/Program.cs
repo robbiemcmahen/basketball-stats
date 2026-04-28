@@ -15,7 +15,7 @@ builder.Services.AddControllers()
     });
 builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<PlayerService>();
-builder.Services.AddSingleton<GameService>();
+builder.Services.AddScoped<GameService>();
 builder.Services.AddSingleton<GameEventService>();
 builder.Services.AddSingleton<BoxScoreService>();
 builder.Services.AddCors(options =>

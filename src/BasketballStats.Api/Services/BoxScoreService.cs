@@ -1,15 +1,17 @@
 public class BoxScoreService
 {
     private readonly GameEventService _gameEventService;
+    private readonly AppDbContext _context;
 
-    public BoxScoreService(GameEventService gameEventService)
+    public BoxScoreService(GameEventService gameEventService, AppDbContext context)
     {
         _gameEventService = gameEventService;
+        _context = context;
     }
 
-    public GameBoxScore GetBoxScore(int gameId)
+    public async Task<GameBoxScore> GetBoxScore(int gameId)
     {
-        var events = _gameEventService.GetByGameId(gameId);
+        var events = await _gameEventService.GetByGameId(gameId);
 
         var playerStats = events
             .GroupBy(e => e.PlayerId)

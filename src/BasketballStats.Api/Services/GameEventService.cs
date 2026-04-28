@@ -1,40 +1,48 @@
+using Microsoft.EntityFrameworkCore;
+
 public class GameEventService
 {
-    private readonly List<GameEvent> _events = new();
+    private readonly AppDbContext _context;
 
-    public List<GameEvent> GetAll() {
-        return _events;
-    }
-
-    public GameEvent? GetById(int id)
+    public GameEventService(AppDbContext context)
     {
-        return _events.FirstOrDefault(e => e.Id == id);
+        _context = context;
     }
 
-    public List<GameEvent> GetByGameId(int gameId)
+    public async Task<List<GameEvent>> GetAll() {
+        return await _context.GameEvents.ToListAsync();
+    }
+
+    public async Task<GameEvent?> GetById(int id)
     {
-        return _events.Where(e => e.GameId == gameId).ToList();
+        return await _context.GameEvents.FindAsync(id);
     }
 
-    public GameEvent Create(GameEvent gameEvent) {
-        gameEvent.Id = _events.Count + 1;
+    public async Task<List<GameEvent>> GetByGameId(int gameId)
+    {
+        return await _context.GameEvents.Where(e => e.GameId == gameId).OrderBy(e => e.CreatedAt).ToListAsync();
+    }
+
+    public async Task<GameEvent> Create(GameEvent gameEvent) {
         gameEvent.CreatedAt = DateTime.UtcNow;
 
-        _events.Add(gameEvent);
+        _context.GameEvents.Add(gameEvent);
+        await _context.SaveChangesAsync();
 
         return gameEvent;
     }
 
-    public bool Delete(int id)
+    public async Task<bool> Delete(int id)
     {
-        var gameEvent = GetById(id);
+        var gameEvent = await GetById(id);
 
         if (gameEvent == null)
         {
             return false;
         }
 
-        _events.Remove(gameEvent);
+        _context.GameEvents.Remove(gameEvent);
+        await _context.SaveChangesAsync();
         return true;
     }
 }

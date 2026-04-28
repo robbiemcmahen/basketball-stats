@@ -1,12 +1,17 @@
-export default function BoxScoreTable({ boxScore, players }) {
+export default function BoxScoreTable({ boxScore, players = [] }) {
     if (!boxScore) {
         return <p>Loading box score...</p>;
-        
     }
+
+    const boxScoreRows = boxScore.players ?? [];
 
     const getPlayerName = (playerId) => {
         const player = players.find(p => p.id == playerId);
         return player ? player.name: "Unknown";
+    }
+
+    if (boxScoreRows.length === 0) {
+        return <p>No stats recorded yet.</p>
     }
 
     return (
@@ -35,7 +40,7 @@ export default function BoxScoreTable({ boxScore, players }) {
                 </thead>
 
                 <tbody>
-                    {boxScore.players.map((p) => (
+                    {boxScoreRows.map((p) => (
                         <tr key={p.playerId}>
                             <td>{getPlayerName(p.playerId)}</td>
                             <td>{p.teamId}</td>

@@ -16,8 +16,8 @@ builder.Services.AddControllers()
 builder.Services.AddScoped<TeamService>();
 builder.Services.AddScoped<PlayerService>();
 builder.Services.AddScoped<GameService>();
-builder.Services.AddSingleton<GameEventService>();
-builder.Services.AddSingleton<BoxScoreService>();
+builder.Services.AddScoped<GameEventService>();
+builder.Services.AddScoped<BoxScoreService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",

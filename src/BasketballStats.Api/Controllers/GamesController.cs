@@ -67,7 +67,7 @@ public class GamesController : ControllerBase
             return NotFound();
         }
 
-        var boxScore = _boxScoreService.GetBoxScore(id);
+        var boxScore = await _boxScoreService.GetBoxScore(id);
 
         return Ok(boxScore);
     }

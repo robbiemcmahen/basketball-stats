@@ -12,15 +12,15 @@ public class GameEventController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<GameEvent>> GetEvents()
+    public async Task<ActionResult<List<GameEvent>>> GetEvents()
     {
-        return Ok(_gameEventService.GetAll());
+        return Ok(await _gameEventService.GetAll());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<GameEvent> GetEvent(int id)
+    public async Task<ActionResult<GameEvent>> GetEvent(int id)
     {
-        var gameEvent = _gameEventService.GetByGameId(id);
+        var gameEvent = await _gameEventService.GetById(id);
 
         if (gameEvent == null)
         {
@@ -31,16 +31,16 @@ public class GameEventController : ControllerBase
     } 
 
     [HttpGet("game/{gameId}")]
-    public ActionResult<List<GameEvent>> GetEventsByGame(int gameId)
+    public async Task<ActionResult<List<GameEvent>>> GetEventsByGame(int gameId)
     {
-        return Ok(_gameEventService.GetByGameId(gameId));
+        return Ok(await _gameEventService.GetByGameId(gameId));
 
     }
 
     [HttpPost]
-    public ActionResult<GameEvent> CreateEvent(GameEvent gameEvent)
+    public async Task<ActionResult<GameEvent>> CreateEvent(GameEvent gameEvent)
     {
-        var createdEvent = _gameEventService.Create(gameEvent);
+        var createdEvent = await _gameEventService.Create(gameEvent);
 
         return CreatedAtAction(
             nameof(GetEvent),
@@ -50,9 +50,9 @@ public class GameEventController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public IActionResult DeleteEvent(int id)
+    public async Task<IActionResult> DeleteEvent(int id)
     {
-        var deleted = _gameEventService.Delete(id);
+        var deleted = await _gameEventService.Delete(id);
 
         if (!deleted)
         {

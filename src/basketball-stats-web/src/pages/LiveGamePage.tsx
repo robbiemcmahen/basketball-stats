@@ -66,6 +66,8 @@ export default function LiveGamePage() {
             const res = await fetch(`http://localhost:5255/api/games/${gameId}/boxscore`);
 
             const data = await res.json();
+
+            console.log("box score data:", data);
             setBoxScore(data);
         } catch (err) {
             console.error(err);

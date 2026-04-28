@@ -10,6 +10,7 @@ export default function LiveGamePage() {
     const [selectedPlayer, setSelectedPlayer] = useState(null);
     const allPlayers = [...homeTeamPlayers, ...awayTeamPlayers];
     const [boxScore, setBoxScore] = useState(null);
+    const [events, setEvents] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:5255/api/games/${gameId}`)
@@ -33,6 +34,11 @@ export default function LiveGamePage() {
 
     }, [game]);
 
+    const getPlayerName = (playerId) => {
+        const player = allPlayers.find(p => p.id == playerId);
+        return player ? player.name: "Unknown";
+    }
+
     const recordEvent = async (type) => {
         const newEvent = {
             gameId: gameId,
@@ -55,7 +61,20 @@ export default function LiveGamePage() {
                 return;
             } 
             fetchBoxScore();
+            fetchEvents();
 
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const fetchEvents = async () => {
+        try {
+            const res = await fetch(`http://localhost:5255/api/gameevent/game/${gameId}`);
+
+            const data = await res.json();
+
+            setEvents(data);
         } catch (err) {
             console.error(err);
         }
@@ -67,7 +86,6 @@ export default function LiveGamePage() {
 
             const data = await res.json();
 
-            console.log("box score data:", data);
             setBoxScore(data);
         } catch (err) {
             console.error(err);
@@ -192,7 +210,22 @@ export default function LiveGamePage() {
                 </section>
             </div>
 
-            
+            <section>
+                <h2>Event Log</h2>
+
+                {events.length === 0 ? (
+                    <p>No events recorded yet.</p>
+                ) : (
+                    <ul>
+                        {events.reverse().map(e => (
+                            <li key={e.id}>
+                                {getPlayerName(e.playerId)} - {e.type}
+                            </li>
+                        ))}
+                    </ul>
+                )
+                }
+            </section>
 
             <BoxScoreTable boxScore={boxScore} players={allPlayers}/>
         </>

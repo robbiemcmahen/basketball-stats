@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
+import BoxScoreTable from "../components/BoxScoreTable";
 
 export default function LiveGamePage() {
     const { gameId } = useParams();
@@ -177,7 +178,8 @@ export default function LiveGamePage() {
                     Foul
                 </button>
             </div>
-             
+
+            <BoxScoreTable boxScore={boxScore}/>
         </>
     )
 }

@@ -8,6 +8,7 @@ export default function LiveGamePage() {
     const [homeTeamPlayers, setHomeTeamPlayers] = useState([]);
     const [awayTeamPlayers, setAwayTeamPlayers] = useState([]);
     const [selectedPlayer, setSelectedPlayer] = useState(null);
+    const allPlayers = [...homeTeamPlayers, ...awayTeamPlayers];
     const [boxScore, setBoxScore] = useState(null);
 
     useEffect(() => {
@@ -179,7 +180,7 @@ export default function LiveGamePage() {
                 </button>
             </div>
 
-            <BoxScoreTable boxScore={boxScore}/>
+            <BoxScoreTable boxScore={boxScore} players={allPlayers}/>
         </>
     )
 }

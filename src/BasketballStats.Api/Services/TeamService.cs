@@ -1,19 +1,29 @@
+using Microsoft.EntityFrameworkCore;
+
 public class TeamService
 {
-    private readonly List<Team> _teams = new()
+    private readonly AppDbContext _context;
+
+    public TeamService(AppDbContext context)
     {
-        new Team { Id = 1, Name = "Chuds" }
-    };
+        _context = context;
+    }
 
-    public List<Team> GetAll() => _teams;
-
-    public Team? GetById(int id) => 
-        _teams.FirstOrDefault(t => t.Id == id);
-
-    public Team Create(Team team)
+    public async Task<List<Team>> GetAll()
     {
-        team.Id = _teams.Count + 1;
-        _teams.Add(team);
+        return await _context.Teams.ToListAsync();
+    }
+
+    public async Task<Team?> GetById(int id)
+    {
+        return await _context.Teams.FindAsync(id);
+    }
+        
+    public async Task<Team> Create(Team team)
+    {
+        _context.Teams.Add(team);
+        await _context.SaveChangesAsync();
+
         return team;
     }
 }

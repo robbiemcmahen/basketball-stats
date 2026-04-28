@@ -13,7 +13,7 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
-builder.Services.AddSingleton<TeamService>();
+builder.Services.AddScoped<TeamService>();
 builder.Services.AddSingleton<PlayerService>();
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<GameEventService>();

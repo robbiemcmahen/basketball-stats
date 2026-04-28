@@ -90,95 +90,107 @@ export default function LiveGamePage() {
                 </div>
             )}
 
-            {homeTeamPlayers && (
-                <div>
-                    <h2>Home Team:</h2>
-                    <ul>
-                        {homeTeamPlayers.map((p) => (
-                            <li
-                                key={p.id}
-                                onClick={() => setSelectedPlayer(p)}
-                            >
-                                #{p.jerseyNumber} - {p.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+            <div className="live-game-layout">
+                <section className="team-column">
+                    {homeTeamPlayers && (
+                        <div>
+                            <h2>Home Team:</h2>
+                            <ul>
+                                {homeTeamPlayers.map((p) => (
+                                    <button
+                                        key={p.id}
+                                        onClick={() => setSelectedPlayer(p)}
+                                        className={selectedPlayer?.id === p.id ? "player-card selected" : "player-card"}
+                                    >
+                                        #{p.jerseyNumber} - {p.name}
+                                    </button>
+                                ))}
+                            </ul>
+                        </div>
+                )}
+                </section>
 
-            {awayTeamPlayers && (
-                <div>
-                    <h2>Away Team:</h2>
-                    <ul>
-                        {awayTeamPlayers.map((p) => (
-                            <li 
-                                key={p.id}
-                                onClick={() => setSelectedPlayer(p)}
-                            >
-                                #{p.jerseyNumber} - {p.name}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
+                <main className="stat-panel">
+                    {selectedPlayer && (
+                        <div>
+                            <h3>Selected Player:</h3>
+                            <p>#{selectedPlayer.jerseyNumber} - {selectedPlayer.name}</p>
+                        </div>
+                        
+                    )}
 
-            {selectedPlayer && (
-                <div>
-                    <h3>Selected Player:</h3>
-                    <p>#{selectedPlayer.jerseyNumber} - {selectedPlayer.name}</p>
-                </div>
-                
-            )}
+                    <div className="stat-buttons">
+                        <button onClick={() => recordEvent("TwoPointMade")}>
+                            2PT Made
+                        </button>
 
-            <div>
-                <button onClick={() => recordEvent("TwoPointMade")}>
-                    2PT Made
-                </button>
+                        <button onClick={() => recordEvent("TwoPointMissed")}>
+                            2PT Missed
+                        </button>
 
-                <button onClick={() => recordEvent("TwoPointMissed")}>
-                    2PT Missed
-                </button>
+                        <button onClick={() => recordEvent("ThreePointMade")}>
+                            3PT Made
+                        </button>
 
-                <button onClick={() => recordEvent("ThreePointMade")}>
-                    3PT Made
-                </button>
+                        <button onClick={() => recordEvent("ThreePointMissed")}>
+                            3PT Missed
+                        </button>
 
-                <button onClick={() => recordEvent("ThreePointMissed")}>
-                    3PT Missed
-                </button>
+                        <button onClick={() => recordEvent("FreeThrowMade")}>
+                            FT Made
+                        </button>
 
-                <button onClick={() => recordEvent("FreeThrowMade")}>
-                    FT Made
-                </button>
+                        <button onClick={() => recordEvent("FreeThrowMissed")}>
+                            FT Missed
+                        </button>
 
-                <button onClick={() => recordEvent("FreeThrowMissed")}>
-                    FT Missed
-                </button>
+                        <button onClick={() => recordEvent("Rebound")}>
+                            Rebound
+                        </button>
 
-                <button onClick={() => recordEvent("Rebound")}>
-                    Rebound
-                </button>
+                        <button onClick={() => recordEvent("Assist")}>
+                            Assist
+                        </button>
 
-                <button onClick={() => recordEvent("Assist")}>
-                    Assist
-                </button>
+                        <button onClick={() => recordEvent("Steal")}>
+                            Steal
+                        </button>
 
-                <button onClick={() => recordEvent("Steal")}>
-                    Steal
-                </button>
+                        <button onClick={() => recordEvent("Block")}>
+                            Block
+                        </button>
 
-                <button onClick={() => recordEvent("Block")}>
-                    Block
-                </button>
+                        <button onClick={() => recordEvent("Turnover")}>
+                            Turnover
+                        </button>
 
-                <button onClick={() => recordEvent("Turnover")}>
-                    Turnover
-                </button>
+                        <button onClick={() => recordEvent("Foul")}>
+                            Foul
+                        </button>
+                    </div>
+                </main>
 
-                <button onClick={() => recordEvent("Foul")}>
-                    Foul
-                </button>
+                <section className="team-column">
+                    {awayTeamPlayers && (
+                        <div>
+                            <h2>Away Team:</h2>
+                            <ul>
+                                {awayTeamPlayers.map((p) => (
+                                    <button
+                                        key={p.id}
+                                        onClick={() => setSelectedPlayer(p)}
+                                        className={selectedPlayer?.id === p.id ? "player-card selected" : "player-card"}
+                                    >
+                                        #{p.jerseyNumber} - {p.name}
+                                    </button>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                </section>
             </div>
+
+            
 
             <BoxScoreTable boxScore={boxScore} players={allPlayers}/>
         </>

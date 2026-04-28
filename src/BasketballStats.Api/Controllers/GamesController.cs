@@ -2,12 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("/api/[controller]")]
-public class GamesControler : ControllerBase
+public class GamesController : ControllerBase
 {
     private readonly GameService _gameService;
     private readonly BoxScoreService _boxScoreService;
 
-    public GamesControler(GameService gameService, BoxScoreService boxScoreService)
+    public GamesController(GameService gameService, BoxScoreService boxScoreService)
     {
         _gameService = gameService;
         _boxScoreService = boxScoreService;

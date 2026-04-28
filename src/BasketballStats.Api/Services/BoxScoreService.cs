@@ -9,7 +9,7 @@ public class BoxScoreService
 
     public GameBoxScore GetBoxScore(int gameId)
     {
-        var events = _gameEventService.GetAll();
+        var events = _gameEventService.GetByGameId(gameId);
 
         var playerStats = events
             .GroupBy(e => e.PlayerId)

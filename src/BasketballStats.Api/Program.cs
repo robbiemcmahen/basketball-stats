@@ -14,7 +14,7 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddScoped<TeamService>();
-builder.Services.AddSingleton<PlayerService>();
+builder.Services.AddScoped<PlayerService>();
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<GameEventService>();
 builder.Services.AddSingleton<BoxScoreService>();

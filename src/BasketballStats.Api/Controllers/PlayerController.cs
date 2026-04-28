@@ -11,15 +11,15 @@ public class PlayerController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Player>> GetPlayers()
+    public async Task<ActionResult<List<Player>>> GetPlayers()
     {
-        return Ok(_playerService.GetAll());
+        return Ok(await _playerService.GetAll());
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Player> GetPlayer(int id)
+    public async Task<ActionResult<Player>> GetPlayer(int id)
     {
-        var player = _playerService.GetById(id);
+        var player = await _playerService.GetById(id);
 
         if (player == null)
         {
@@ -29,19 +29,19 @@ public class PlayerController : ControllerBase
     }
 
     [HttpGet("team/{teamId}")]
-    public ActionResult<List<Player>> GetPlayersByTeam(int teamId)
+    public async Task<ActionResult<List<Player>>> GetPlayersByTeam(int teamId)
     {
-        return Ok(_playerService.GetByTeamId(teamId));
+        return Ok(await _playerService.GetByTeamId(teamId));
     }
 
     [HttpPost]
-    public ActionResult<Player> CreatePlayer(Player player)
+    public async Task<ActionResult<Player>> CreatePlayer(Player player)
     {
-        var createdPlayer = _playerService.Create(player);
+        var createdPlayer = await _playerService.Create(player);
 
         return CreatedAtAction(
             nameof(GetPlayer),
-            new { Id = createdPlayer.Id },
+            new { id = createdPlayer.Id },
             createdPlayer
         );
     }

@@ -1,26 +1,34 @@
+using Microsoft.EntityFrameworkCore;
+
 public class PlayerService
 {
-    private readonly List<Player> _players = new()
-    {
-        new Player{ Id = 1, Name = "Player", JerseyNumber = 1, TeamId = 1 }
-    };
+    private readonly AppDbContext _context;
 
-    public List<Player> GetAll() => _players;
-
-    public Player? GetById(int id)
+    public PlayerService(AppDbContext context)
     {
-        return _players.FirstOrDefault(p => p.Id == id);
+        _context = context;
     }
 
-    public List<Player> GetByTeamId(int teamId)
+    public async Task<List<Player>> GetAll()
     {
-        return _players.Where(p => p.TeamId == teamId).ToList();
+        return await _context.Players.ToListAsync();
     }
 
-    public Player Create(Player player)
+    public async Task<Player?> GetById(int id)
     {
-        player.Id = _players.Count + 1;
-        _players.Add(player);
+        return await _context.Players.FindAsync(id);
+
+    }
+
+    public async Task<List<Player>> GetByTeamId(int teamId)
+    {
+        return await _context.Players.Where(p => p.TeamId == teamId).ToListAsync();
+    }
+
+    public async Task<Player> Create(Player player)
+    {
+        _context.Players.Add(player);
+        await _context.SaveChangesAsync();
         return player;
     }
 }

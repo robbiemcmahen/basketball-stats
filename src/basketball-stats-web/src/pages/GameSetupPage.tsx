@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 
 export default function GameSetupPage() {
     const [teams, setTeams] = useState([]);
@@ -91,7 +92,10 @@ export default function GameSetupPage() {
 
             <ul>
                 {games.map((g) => (
-                    <li key={g.id}>{g.homeTeamId} vs {g.awayTeamId} - {g.status}</li>
+                    <li key={g.id}>
+                        {g.homeTeamId} vs {g.awayTeamId} - {g.status}
+                        <Link to={`./${g.id}/live`}>Open Live Game</Link>
+                    </li>
                 ))}
             </ul>
         </>

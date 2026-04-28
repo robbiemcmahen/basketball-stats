@@ -3,6 +3,7 @@ import './App.css'
 import TeamsPage from './pages/TeamsPage'
 import PlayersPage from "./pages/PlayersPage";
 import GameSetupPage from "./pages/GameSetupPage";
+import LiveGamePage from "./pages/LiveGamePage";
 
 function App() {
 
@@ -11,7 +12,8 @@ function App() {
       <Routes>
         <Route path="/teams" element={<TeamsPage/>}/>
         <Route path="/players" element={<PlayersPage/>}/>
-        <Route path="/game-setup" element={<GameSetupPage/>}/>
+        <Route path="/games" element={<GameSetupPage/>}/>
+        <Route path="/games/:gameId/live" element={<LiveGamePage/>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -17,6 +17,16 @@ builder.Services.AddSingleton<PlayerService>();
 builder.Services.AddSingleton<GameService>();
 builder.Services.AddSingleton<GameEventService>();
 builder.Services.AddSingleton<BoxScoreService>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend",
+    policy =>
+    {
+        policy.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -50,6 +60,7 @@ app.MapGet("/weatherforecast", () =>
 app.UseSwagger();
 app.UseSwaggerUI();
 app.MapControllers();
+app.UseCors("AllowFrontend");
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

@@ -5,6 +5,8 @@ import BoxScoreTable from "../components/BoxScoreTable";
 export default function LiveGamePage() {
     const { gameId } = useParams();
     const [game, setGame] = useState(null);
+    const [homeTeam, setHomeTeam] = useState(null);
+    const [awayTeam, setAwayTeam] = useState(null);
     const [homeTeamPlayers, setHomeTeamPlayers] = useState([]);
     const [awayTeamPlayers, setAwayTeamPlayers] = useState([]);
     const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -34,11 +36,24 @@ export default function LiveGamePage() {
 
     }, [game]);
 
+    useEffect(() => {
+        if (!game) return;
+
+        fetch(`http://localhost:5255/api/teams/${game.homeTeamId}`)
+            .then(res => res.json())
+            .then(data => setHomeTeam(data))
+            .catch(err => console.error(err))
+
+        fetch(`http://localhost:5255/api/teams/${game.awayTeamId}`)
+            .then(res => res.json())
+            .then(data => setAwayTeam(data))
+            .catch(err => console.error(err))
+    }, [game])
+
     const getPlayerName = (playerId) => {
         const player = allPlayers.find(p => p.id == playerId);
         return player ? player.name: "Unknown";
     }
-
 
     const recordEvent = async (type) => {
         const newEvent = {
@@ -130,8 +145,8 @@ export default function LiveGamePage() {
             {game && (
                 <div>
                     <p>Game ID: {game.id}</p>
-                    <p>Home Team: {game.homeTeamId}</p>
-                    <p>Away Team: {game.awayTeamId}</p>
+                    <p>Home Team: {homeTeam?.name}</p>
+                    <p>Away Team: {awayTeam?.name}</p>
                     <p>Status: {game.status}</p>
                 </div>
             )}

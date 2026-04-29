@@ -76,6 +76,8 @@ export default function GameSetupPage() {
                 return;
             }
 
+            setGames(games.filter(g => g.id !== gameId));
+
         } catch (err) {
             console.error(err);
         }

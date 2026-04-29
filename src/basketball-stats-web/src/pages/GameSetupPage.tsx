@@ -21,6 +21,11 @@ export default function GameSetupPage() {
             .catch(err => console.error(err))
     }, []);
 
+    const getTeamName = (teamId) => {
+        const team = teams.find(t => t.id === teamId);
+        return team ? team.name : "Unknown";
+    }
+
 
     const handleGameCreate = async (e) => {
         e.preventDefault();
@@ -93,7 +98,7 @@ export default function GameSetupPage() {
             <ul>
                 {games.map((g) => (
                     <li key={g.id}>
-                        {g.homeTeamId} vs {g.awayTeamId} - {g.status}
+                        {getTeamName(g.homeTeamId)} vs {getTeamName(g.awayTeamId)} - {g.status}
                         <Link to={`./${g.id}/live`}>Open Live Game</Link>
                     </li>
                 ))}

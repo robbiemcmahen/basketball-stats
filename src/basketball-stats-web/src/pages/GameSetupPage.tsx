@@ -63,6 +63,23 @@ export default function GameSetupPage() {
 
         
     }
+
+    const handleGameDelete = async (gameId) => {
+
+        try {
+            const res = await fetch(`http://localhost:5255/api/games/${gameId}`, {
+                method: "DELETE"
+            })
+
+            if (!res.ok) {
+                console.error("Failed to delete game");
+                return;
+            }
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
     
 
     return (
@@ -103,6 +120,7 @@ export default function GameSetupPage() {
                     <li key={g.id}>
                         {getTeamName(g.homeTeamId)} vs {getTeamName(g.awayTeamId)} - {g.status}
                         <Link to={`./${g.id}/live`}>Open Live Game</Link>
+                        <button onClick={() => handleGameDelete(g.id)}>Delete Game</button>
                     </li>
                 ))}
             </ul>

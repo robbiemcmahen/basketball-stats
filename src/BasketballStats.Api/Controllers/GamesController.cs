@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
@@ -70,5 +71,18 @@ public class GamesController : ControllerBase
         var boxScore = await _boxScoreService.GetBoxScore(id);
 
         return Ok(boxScore);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteGame(int id)
+    {
+        var deleted = await _gameService.Delete(id);
+
+        if (!deleted)
+        {
+            return NotFound();
+        }
+
+        return NoContent();
     }
 }

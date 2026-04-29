@@ -73,9 +73,11 @@ export default function GameSetupPage() {
                     value={homeTeamId}
                     onChange={(e) => setHomeTeamId(e.target.value)}
                 >
-                    {teams.map((t) => (
-                        <option key={t.id} value={t.id}>{t.name}</option>
-                    ))}
+                    <option value="">Select a team:</option>
+
+                        {teams.map((t) => (
+                            <option key={t.id} value={t.id}>{t.name}</option>
+                        ))}
                 </select>
 
                 <label>Away Team:</label>
@@ -83,9 +85,10 @@ export default function GameSetupPage() {
                     value={awayTeamId}
                     onChange={(e) => setAwayTeamId(e.target.value)}
                 >
-                    {teams.map((t) => (
-                        <option key={t.id} value={t.id}>{t.name}</option>
-                    ))}
+                    <option value="">Select a team:</option>
+                        {teams.map((t) => (
+                            <option key={t.id} value={t.id}>{t.name}</option>
+                        ))}
                 </select>
 
                 <button

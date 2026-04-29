@@ -39,6 +39,7 @@ export default function LiveGamePage() {
         return player ? player.name: "Unknown";
     }
 
+
     const recordEvent = async (type) => {
         const newEvent = {
             gameId: gameId,
@@ -94,8 +95,33 @@ export default function LiveGamePage() {
 
     useEffect(() => {
         if (!gameId) return;
+        fetchEvents();
         fetchBoxScore();
     }, [gameId]);
+
+    const undoLastEvent = async () => {
+        if (events.length === 0) {
+            return;
+        }
+
+        const lastEvent = events[events.length - 1];
+
+        try {
+            const res = await fetch(`http://localhost:5255/api/gameevent/${lastEvent.id}`, {
+                method: "DELETE"
+            });
+
+            if (!res.ok) {
+                console.error("Failed to undo last event");
+                return;
+            }
+
+            await fetchEvents();
+            await fetchBoxScore();
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
         <>
@@ -209,6 +235,10 @@ export default function LiveGamePage() {
                     )}
                 </section>
             </div>
+
+            <button onClick={undoLastEvent}>
+                Undo Last Event
+            </button>
 
             <section>
                 <h2>Event Log</h2>

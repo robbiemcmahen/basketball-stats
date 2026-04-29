@@ -156,3 +156,14 @@ code {
     gap: 24px;
     align-items: start;
 }
+
+.stats-lower {
+  display: flex;
+}
+
+.undo-button {
+  gap: 16px;
+  padding: 16px;
+  margin: 16px;
+  width: fit-content;
+}

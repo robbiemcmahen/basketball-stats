@@ -251,11 +251,11 @@ export default function LiveGamePage() {
                 </section>
             </div>
 
-            <button onClick={undoLastEvent}>
+            <button onClick={undoLastEvent} className="undo-button">
                 Undo Last Event
             </button>
 
-            <section>
+            <section className="stats-lower">
                 <h2>Event Log</h2>
 
                 {events.length === 0 ? (
@@ -270,9 +270,11 @@ export default function LiveGamePage() {
                     </ul>
                 )
                 }
+
+                <BoxScoreTable boxScore={boxScore} players={allPlayers}/>
             </section>
 
-            <BoxScoreTable boxScore={boxScore} players={allPlayers}/>
+            
         </>
     )
 }
